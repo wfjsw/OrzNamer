@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<!--
+  https://github.com/The-Orizon/OrzNamer
+  Released under Apache 2.0 license
+-->
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>##Orz 改名部</title>
+    <link rel="stylesheet" href="https://storage.googleapis.com/code.getmdl.io/1.0.6/material.indigo-pink.min.css">
+    <script src="https://storage.googleapis.com/code.getmdl.io/1.0.6/material.min.js"></script>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <style>
+      #settings_card {
+        margin: 0 auto;
+        width: 48em;
+        max-width: 100%;
+      }
+      #progress_bar {
+        width: 100%;
+        visibility: hidden;
+      }
+      #text_field {
+        width: 100%;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
+      <header class="mdl-layout__header">
+        <div class="mdl-layout-icon">
+            <button id="back_button" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon">
+            <i class="material-icons">arrow_back</i>
+          </button>
+        </div>
+        <div class="mdl-layout__header-row">
+          <span class="mdl-layout-title">##Orz 改名部</span>
+        </div>
+      </header>
+      <main class="mdl-layout__content">
+        <div id="settings_card" class="mdl-card mdl-shadow--2dp">
+          <div class="mdl-card__title">
+            <h2 class="mdl-card__title-text">设置新群名</h2>
+          </div>
+          <div id="progress_bar" class="mdl-progress mdl-js-progress mdl-progress__indeterminate"></div>
+          <div class="mdl-card__supporting-text">
+            <div id="text_field" class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+              <textarea class="mdl-textfield__input" type="text" rows= "5" id="new_name"></textarea>
+              <label class="mdl-textfield__label" for="new_name">##Orz 分部 - …</label>
+            </div>
+          </div>
+          <div class="mdl-card__actions mdl-card--border" style="text-align: right">
+            <button id="update_button" class="mdl-button mdl-js-button mdl-button--primary mdl-js-ripple-effect">
+              更新群名
+            </button>
+          </div>
+        </div>
+      </main>
+    </div>
+    <script>
+      document.getElementById("back_button").addEventListener("click", function BackButtonClick() {
+        history.back();
+        window.close();
+      });
+      document.getElementById("update_button").addEventListener("click", function UpdateButtonClick() {
+        var update_button = this;
+        var progress_bar = document.getElementById("progress_bar");
+        update_button.disabled = true;
+        progress_bar.style.visibility = "visible";
+        componentHandler.upgradeElement(update_button);
+        componentHandler.upgradeElement(progress_bar);
+        setTimeout(function UpdateSuccess() {
+          progress_bar.style.visibility = "hidden";
+          update_button.disabled = false;
+          componentHandler.upgradeElement(update_button);
+          componentHandler.upgradeElement(progress_bar);
+        }, 1000);
+      });
+    </script>
+  </body>
+</html>
