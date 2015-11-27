@@ -6,8 +6,8 @@
         <style>
             * {
                 box-sizing: border-box;
+                font-family: "Segoe UI", "Microsoft YaHei UI", "Microsoft YaHei", sans-serif;
                 outline: 0;
-                font-family: "Segoe UI", "Microsoft YaHei", sans-serif;
             }
             html {
                 height: 100%;
@@ -35,8 +35,7 @@
             }
 
             .onright {
-                float:right;
-                right: 0;
+                align-self: flex-end;
             }
             .icon {
                 flex: 0 50px;
@@ -51,9 +50,6 @@
                 color: black;
                 padding: 0 18px;
             }
-            .clearfix {
-                /*clear: both;*/
-            }
             .container {
                 clear: both;
                 padding: 18px;
@@ -61,26 +57,6 @@
                 flex: 1;
                 display: flex;
                 flex-direction: column;
-            }
-            .button {
-                width: 90px;
-                height: 32px;
-                border: none;
-                background-color: #cccccc;
-                text-align: center;
-                color: black;
-                text-decoration: none;
-                padding: 0;
-                font-size: 11pt;
-                color: black;
-                display: block;
-            }
-            .button:hover {
-                border: 2px solid #7a7a7a;
-            }
-            .button:active {
-                background-color: #999999;
-                border: none;
             }
 
             .titlebutton {
@@ -93,7 +69,6 @@
                 font-size: 11pt;
                 color: black;
                 padding: 0 1em;
-                align-self: flex-end;
             }
             .titlebutton:hover {
                 background-color: #cfcfcf;
@@ -102,15 +77,11 @@
                 background-color: #b8b8b8;
             }
             .textbox {
-                /*position: absolute;*/
                 flex: 1;
                 border: none;
                 width: 100%;
                 margin: 0;
                 padding: 0;
-                /*bottom: 0;
-                left: 0;
-                right: 0;*/
                 font-size: 12pt;
             }
             .disabled {
@@ -121,34 +92,44 @@
     </head>
     <body>
         <header class="titlebar">
-            <div id="back_button" class="icon titleitem titlebutton" src="orz.gif"></div><div class="title titleitem">##Orz 改名部</div><a id="submit_button" class="titlebutton titleitem onright" href="javascript:">提交</a>
-            <div class="clearfix"></div>
+            <div id="back_button" class="icon titleitem titlebutton" src="orz.gif"></div>
+            <div class="title titleitem">##Orz 改名部</div>
+            <a id="submit_button" class="titlebutton titleitem onright" href="javascript:">提交</a>
         </header>
         <div class="container">
             <div>##Orz 分部喵 - daily.orz.chat -</div>
-            <textarea id="newname_box" class="textbox" placeholder="New name" autofocus="autofocus"></textarea>
+            <textarea id="newname_box" class="textbox" placeholder="New name" autofocus="autofocus">FIXME: original name should be here</textarea>
         </div>
         <script><!--
-
-            function updateName(newName) {
-                return false;
+            function goBack() {
+                    history.back();
+                    window.close();
+                    window.open('tg:join?invite=A8eCpTuqXjqpZZefNH8Omg','_self');
             }
+            function updateName(newName) {
+                // TODO
+                return confirm("[STUB] Change name to "+newName+"?");
+            }
+            function showPrompt(content, callback) {
+                // FIXME
+                alert(content);
+                callback();
+            }
+            back_button.addEventListener("click", goBack);
             submit_button.addEventListener("click", function() {
                 newname_box.disabled = true;
                 submit_button.classList.add("disabled");
                 back_button.classList.add("disabled");
 
                 if(updateName(newname_box.value)) {
-                    history.back();
-                    window.close();
-                    window.open('tg:join?invite=A8eCpTuqXjqpZZefNH8Omg','_self');
+                    goBack();
                 } else {
-                    alert("更新失败。")
+                    showPrompt("更新失败。", function() {
+                        newname_box.disabled = false;
+                        submit_button.classList.remove("disabled");
+                        back_button.classList.remove("disabled");
+                    });
                 }
-                newname_box.disabled = false;
-                submit_button.classList.remove("disabled");
-                back_button.classList.remove("disabled");
-
             });
         --></script>
     </body>
