@@ -17,7 +17,7 @@ body {
 	box-shadow: 0 2px 2px 0 #ddd;
 }
 #header {
-	padding: 15px 25px 15px;
+	padding: 10px 25px 10px;
 	color: #fff;
 	background-color: #5580a3;
 }
@@ -48,10 +48,10 @@ body {
 	border-radius: 50%;
 }
 section {
-	padding: 40px 37px;
+	padding: 15px 37px 40px;
 }
 h2 {
-	font-size: 1.25em;
+	font-size: 1.3em;
 	margin: 1em 0;
 }
 textarea {
@@ -84,7 +84,7 @@ textarea {
     color: #72a0c7;
 	font-size: 1em;
 	font-weight: 700;
-	padding: 5px 16px;
+	padding: 5px 15px;
 	cursor: pointer;
 	text-align: center;
 	display: inline-block;
@@ -116,28 +116,17 @@ function LoadJSON(newname) {
     }
     xmlhttp.onreadystatechange = function() {
         if (xmlhttp.readyState == XMLHttpRequest.DONE) {
-            FillInResult(xmlhttp.responseText, xmlhttp.status);
+            GotResult(xmlhttp.responseText, xmlhttp.status);
         }
     }
     xmlhttp.open("GET", "?n=" + encodeURIComponent(newname), true);
     xmlhttp.setRequestHeader("X-Requested-With", "XMLHttpRequest");
     xmlhttp.send();
 }
+function GotResult(result, code) {
+    var d = JSON.parse(result);
+}
 function UpdateName() {
-	/*
-	var update_button = this;
-	var progress_bar = document.getElementById("progress_bar");
-	update_button.disabled = true;
-	progress_bar.style.visibility = "visible";
-	componentHandler.upgradeElement(update_button);
-	componentHandler.upgradeElement(progress_bar);
-	setTimeout(function UpdateSuccess() {
-		progress_bar.style.visibility = "hidden";
-		update_button.disabled = false;
-		componentHandler.upgradeElement(update_button);
-		componentHandler.upgradeElement(progress_bar);
-	}, 1000);
-	*/
 	LoadJSON(document.getElementById("newname").value);
 	return false;
 }
