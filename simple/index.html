@@ -84,7 +84,7 @@ textarea {
     color: #72a0c7;
 	font-size: 1em;
 	font-weight: 700;
-	padding: 7px 16px;
+	padding: 5px 16px;
 	cursor: pointer;
 	text-align: center;
 	display: inline-block;
@@ -105,6 +105,24 @@ textarea {
 }
 </style>
 <script>
+function LoadJSON(newname) {
+    var xmlhttp;
+    if (window.XMLHttpRequest) {
+        // code for IE7+, Firefox, Chrome, Opera, Safari
+        xmlhttp = new XMLHttpRequest();
+    } else {
+        // code for IE6, IE5
+        xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+    }
+    xmlhttp.onreadystatechange = function() {
+        if (xmlhttp.readyState == XMLHttpRequest.DONE) {
+            FillInResult(xmlhttp.responseText, xmlhttp.status);
+        }
+    }
+    xmlhttp.open("GET", "?n=" + encodeURIComponent(newname), true);
+    xmlhttp.setRequestHeader("X-Requested-With", "XMLHttpRequest");
+    xmlhttp.send();
+}
 function UpdateName() {
 	/*
 	var update_button = this;
@@ -120,6 +138,7 @@ function UpdateName() {
 		componentHandler.upgradeElement(progress_bar);
 	}, 1000);
 	*/
+	LoadJSON(document.getElementById("newname").value);
 	return false;
 }
 document.addEventListener('DOMContentLoaded', function() {
