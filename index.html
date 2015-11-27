@@ -102,6 +102,9 @@
           componentHandler.upgradeElement(progress_bar);
         }, 1000);
       });
+      document.body.addEventLister("load", function BodyLoad() {
+        window.scrollTo(0, 1);
+      });
     </script>
   </body>
 </html>
