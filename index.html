@@ -108,7 +108,7 @@
           el._tried_fullscreen = true;
           var func = el.requestFullscreen || el.webkitRequestFullscreen || el.mozRequestFullScreen || el.msRequestFullscreen;
           if(func) {
-            func();
+            func.bind(el)();
           }
         }
       });
