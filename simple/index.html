@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>##Orz 改名部</title>
+<style>
+body {
+	font-family: sans-serif;
+	margin: 0;
+	background-color: whitesmoke;
+}
+#container {
+	margin: 0 auto;
+	max-width: 768px;
+	background-color: #fff;
+	box-shadow: 0 2px 2px 0 #ddd;
+}
+#header {
+	padding: 15px 25px 15px;
+	color: #fff;
+	background-color: #5580a3;
+}
+#headerdiv {
+	margin: 1% 0;
+	padding: 3px 0;
+	overflow: auto;
+	padding: 5px;
+}
+#header h1 {
+	margin: .6em 0;
+	font-size: 1.75em;
+}
+#headerwrap {
+	float: left;
+}
+#headerinfo {
+	font-weight: normal;
+	color: #ccdeed;
+}
+#photoh {
+	float: left;
+	margin-right: 19px;
+}
+#photoh img {
+	width: 72px;
+	height: 72px;
+	border-radius: 50%;
+}
+section {
+	padding: 40px 37px;
+}
+h2 {
+	font-size: 1.25em;
+	margin: 1em 0;
+}
+textarea {
+	outline: 0;
+	font-family: sans-serif;
+	font-size: 100%;
+	margin-bottom: .625em;
+}
+#newname {
+	box-sizing: border-box;
+	border-width: 0px 0px 2px;
+	border-style: solid;
+	border-color: #CCC;
+	width: 100%;
+	padding: .4em .3em;
+	transition: all .2s;
+}
+#newname:focus {
+	border-color: #19E;
+	outline: 0;
+}
+#btncontainer {
+	float: right;
+}
+.btnmain {
+	background: 0 0;
+	border: none;
+	border-radius: 2px;
+	text-decoration: none;
+	font-size: 1em;
+	padding: 7px 16px;
+	font-weight: 700;
+	color: #4680b3;
+	cursor: pointer;
+	text-align: center;
+	display: inline-block;
+	margin-bottom: .625em;
+	transition: all .2s;
+}
+.btnmain:hover, .btnmain:focus {
+	background-color: #f2f6fa;
+	outline: 0;
+}
+</style>
+</head>
+<body>
+<div id="container">
+<header id="header">
+	<div id="headerdiv">
+	<div id="photoh"><img src="orz.jpg"></div>
+	<div id="headerwrap">
+		<h1 id="pagetitle">##Orz 改名部</h1>
+	</div>
+	</div>
+</header>
+<section id="appmain">
+<form id="setname" method="GET">
+	<div id="btncontainer">
+	<input class="btnmain" type="submit" value="更新群名" id="fsubmit">
+	</div>
+	<h2>设置新群名</h2>
+	<textarea name="n" type="text" id="newname" placeholder="##Orz 分部喵 - …" rows="5"></textarea>
+</form>
+</section>
+</div>
+</body>
+</html>
