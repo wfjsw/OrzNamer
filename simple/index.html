@@ -76,26 +76,60 @@ textarea {
 #btncontainer {
 	float: right;
 }
-.btnmain {
+.btn {
 	background: 0 0;
 	border: none;
 	border-radius: 2px;
 	text-decoration: none;
+    color: #72a0c7;
 	font-size: 1em;
-	padding: 7px 16px;
 	font-weight: 700;
-	color: #4680b3;
+	padding: 7px 16px;
 	cursor: pointer;
 	text-align: center;
 	display: inline-block;
 	margin-bottom: .625em;
 	transition: all .2s;
 }
-.btnmain:hover, .btnmain:focus {
+.btn:hover, .btn:focus {
 	background-color: #f2f6fa;
 	outline: 0;
 }
+.btnmain {
+	color: #4680b3;
+}
+#prefix {
+	color: #3a6d99;
+	font-size: .875em;
+	padding-left: .25em;
+}
 </style>
+<script>
+function UpdateName() {
+	/*
+	var update_button = this;
+	var progress_bar = document.getElementById("progress_bar");
+	update_button.disabled = true;
+	progress_bar.style.visibility = "visible";
+	componentHandler.upgradeElement(update_button);
+	componentHandler.upgradeElement(progress_bar);
+	setTimeout(function UpdateSuccess() {
+		progress_bar.style.visibility = "hidden";
+		update_button.disabled = false;
+		componentHandler.upgradeElement(update_button);
+		componentHandler.upgradeElement(progress_bar);
+	}, 1000);
+	*/
+	return false;
+}
+document.addEventListener('DOMContentLoaded', function() {
+	document.getElementById("fback").addEventListener("click", function BackButtonClick() {
+		history.back();
+		window.close();
+	});
+	document.getElementById("setname").onsubmit = UpdateName;
+});
+</script>
 </head>
 <body>
 <div id="container">
@@ -110,10 +144,12 @@ textarea {
 <section id="appmain">
 <form id="setname" method="GET">
 	<div id="btncontainer">
-	<input class="btnmain" type="submit" value="更新群名" id="fsubmit">
+	<input class="btn" type="button" value="返回" id="fback">
+	<input class="btn btnmain" type="submit" value="更新群名" id="fsubmit">
 	</div>
 	<h2>设置新群名</h2>
-	<textarea name="n" type="text" id="newname" placeholder="##Orz 分部喵 - …" rows="5"></textarea>
+	<p id="prefix">##Orz 分部喵 -</p>
+	<textarea name="n" type="text" id="newname" placeholder="…" rows="5"></textarea>
 </form>
 </section>
 </div>
