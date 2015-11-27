@@ -37,9 +37,6 @@
         -webkit-font-feature-settings: 'liga';
         -webkit-font-smoothing: antialiased;
       }
-      body {
-        height: calc(100% + 1px);
-      }
       #settings_card {
         margin: 0 auto;
         width: 48em;
@@ -105,8 +102,12 @@
           componentHandler.upgradeElement(progress_bar);
         }, 1000);
       });
-      document.body.addEventLister("load", function BodyLoad() {
-        window.scrollTo(0, 1);
+      document.body.addEventListener("touch", function BodyTouch() {
+        var el = document.documentElement;
+        var func = el.requestFullscreen || el.webkitRequestFullscreen || el.mozRequestFullScreen || el.msRequestFullscreen;
+        if(func) {
+          func();
+        }
       });
     </script>
   </body>
