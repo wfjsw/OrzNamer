@@ -102,11 +102,14 @@
           componentHandler.upgradeElement(progress_bar);
         }, 1000);
       });
-      document.body.addEventListener("touch", function BodyTouch() {
+      document.body.addEventListener("touchstart", function BodyTouch() {
         var el = document.documentElement;
-        var func = el.requestFullscreen || el.webkitRequestFullscreen || el.mozRequestFullScreen || el.msRequestFullscreen;
-        if(func) {
-          func();
+        if(!el._tried_fullscreen) {
+          el._tried_fullscreen = true;
+          var func = el.requestFullscreen || el.webkitRequestFullscreen || el.mozRequestFullScreen || el.msRequestFullscreen;
+          if(func) {
+            func();
+          }
         }
       });
     </script>
