@@ -2,7 +2,7 @@
 <html>
     <head>
         <meta charset="utf-8" />
-        <meta name="viewport" content="width=device-width, user-scalable=no" />
+        <meta name="viewport" content="width=device-width, height=device-height, user-scalable=no" />
         <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
         <link href="style.css" rel="stylesheet">
         <title>##Orz 改名部</title>
@@ -18,8 +18,8 @@
         </div>
         <div id="modal_wrap" class="modal_wrap invisible desc"></div>
         <footer id="footer">
-            <a id="submit_button" class="titlebutton save_button onright" href="javascript:">&#xE105;<div class="desc invisible">保存</div></a>
-            <div id="more_button" class="titlebutton more_button onright">&#xE10C;</div>
+            <a id="submit_button" class="titlebutton save_button" href="javascript:">&#xE105;<div class="desc invisible">保存</div></a>
+            <div id="more_button" class="titlebutton more_button">&#xE10C;</div>
         </footer>
 
         <script><!--
@@ -62,17 +62,7 @@
                 }
             });
             more_button.addEventListener("click", toggleFooter);
-            more_button.addEventListener("touched", function() {touchFix(more_button);});
-            modal_wrap.addEventListener("click", function() {
-                toggleFooter();
-            })
-            function touchFix(el)
-            {
-                var par = el.parentNode;
-                var next = el.nextSibling;
-                par.removeChild(el);
-                setTimeout(function() {par.insertBefore(el, next);}, 0)
-            }
+            modal_wrap.addEventListener("click", toggleFooter);
 
         --></script>
     </body>
