@@ -1,0 +1,16 @@
+/* Splashscreen Styles */
+#splashScreen {
+    position: absolute;
+    z-index: 1;
+    height: 100%;
+    width: 100%;
+    background-image: url("../img/background_hd.png");
+}
+    
+#infSplashscreenPgr{
+    width: 100px;
+    height: 100px;
+    position: absolute;
+    top: calc(50% - 50px);
+    left: calc(50% - 50px);
+}
