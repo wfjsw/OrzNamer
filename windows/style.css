@@ -17,10 +17,12 @@ html {
 body {
     margin: 0;
     height: 100%;
+    width: 100%;
     display: flex;
     display: -webkit-flex;
     flex-direction: column;
     -webkit-flex-direction: column;
+    position: fixed;
     overflow: hidden;
     touch-action:manipulation;
 }
