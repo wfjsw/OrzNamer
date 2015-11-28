@@ -8,21 +8,18 @@
     font-family: "Segoe UI", "Microsoft YaHei UI", "Microsoft YaHei", sans-serif;
     outline: none;
 }
-html {
-    height: 100%;
-    position: fixed;
-    width: 100%;
-    min-height: 120px;
+html, body {
+  height: 100%;
+  width: 100%;
+  overflow: auto;
 }
+
 body {
     margin: 0;
-    height: 100%;
-    width: 100%;
     display: flex;
     display: -webkit-flex;
     flex-direction: column;
     -webkit-flex-direction: column;
-    position: fixed;
     overflow: hidden;
     touch-action:manipulation;
 }
