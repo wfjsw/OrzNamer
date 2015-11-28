@@ -10,7 +10,8 @@
 }
 html {
     height: 100%;
-
+    position: fixed;
+    width: 100%;
     min-height: 120px;
 }
 body {
