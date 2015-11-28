@@ -9,20 +9,21 @@
         <title>##Orz 改名部</title>
     </head>
     <body>
-        <header class="titlebar">
-            <div id="back_button" class="icon titleitem titlebutton" src="orz.gif"></div>
-            <div class="title titleitem">##Orz 改名部</div>
-        </header>
-        <div class="container">
-            <div>##Orz 分部喵 - daily.orz.chat -</div>
-            <textarea id="newname_box" class="textbox" placeholder="New name" autofocus="autofocus">FIXME: original name should be here</textarea>
+        <div class="bodywrap">
+            <header class="titlebar">
+                <div id="back_button" class="icon titleitem titlebutton" src="orz.gif"></div>
+                <div class="title titleitem">##Orz 改名部</div>
+            </header>
+            <div class="container">
+                <div>##Orz 分部喵 - daily.orz.chat -</div>
+                <textarea id="newname_box" class="textbox" placeholder="New name" autofocus="autofocus">FIXME: original name should be here</textarea>
+            </div>
+            <div id="modal_wrap" class="modal_wrap invisible desc"></div>
+            <footer id="footer">
+                <a id="submit_button" class="titlebutton save_button" href="javascript:">&#xE105;<div class="desc invisible">保存</div></a>
+                <div id="more_button" class="titlebutton more_button">&#xE10C;</div>
+            </footer>
         </div>
-        <div id="modal_wrap" class="modal_wrap invisible desc"></div>
-        <footer id="footer">
-            <a id="submit_button" class="titlebutton save_button" href="javascript:">&#xE105;<div class="desc invisible">保存</div></a>
-            <div id="more_button" class="titlebutton more_button">&#xE10C;</div>
-        </footer>
-
         <script><!--
             function goBack() {
                     history.back();
