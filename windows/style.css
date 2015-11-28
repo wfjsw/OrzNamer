@@ -143,13 +143,16 @@ footer {
     justify-content: flex-end;
     align-content: flex-end;
     transition: all .35s cubic-bezier(0.1,0.9,0.2,1) 0s;
-    -ms-transition: all .35s cubic-bezier(0.1,0.9,0.2,1) 0s;
     overflow: hidden;
     z-index: 99999;
+    -webkit-flex: 0 1 48px;
+    -webkit-justify-content: flex-end;
+    -webkit-align-content: flex-end;
 }
 footer.expand {
     height: 60px;
     flex: 0 1 60px;
+    -webkit-flex: 0 1 60px;
 }
 .save_button {
     font-family: myIcons;
