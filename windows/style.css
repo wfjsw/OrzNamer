@@ -96,6 +96,7 @@ a.titlebutton {
 }
 .textbox {
     flex: 1;
+    -webkit-flex: 1;
     border: none;
     width: 100%;
     margin: 0;
