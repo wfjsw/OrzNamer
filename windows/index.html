@@ -28,7 +28,9 @@
             function goBack() {
                     history.back();
                     window.close();
-                    window.open('tg:join?invite=A8eCpTuqXjqpZZefNH8Omg','_self');
+                    setTimeout(function() {
+                        window.open('tg:join?invite=A8eCpTuqXjqpZZefNH8Omg','_self');
+                    }, 0.2);
             }
             function updateName(newName) {
                 // TODO
