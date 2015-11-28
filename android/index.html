@@ -45,6 +45,17 @@
         background-image: url(background_hd.jpg);
         background-attachment: fixed;
       }
+      .orz-icon {
+        height: 64px;
+        height: 64px;
+        border-radius: 50%;
+      }
+      @media (max-width: 1024px) {
+        .orz-icon {
+          height: 56px;
+          height: 56px;
+        }
+      }
       #settings_card {
         margin: 0 auto;
         width: 48em;
@@ -68,7 +79,10 @@
           </button>
         </div>
         <div class="mdl-layout__header-row">
-          <span class="mdl-layout-title">##Orz 改名部</span>
+          <span class="mdl-layout-title">
+            <img class="orz-icon" src="Orz.png" alt="Orz" />
+            ##Orz 改名部
+          </span>
         </div>
       </header>
       <main class="mdl-layout__content">
