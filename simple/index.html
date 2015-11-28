@@ -54,8 +54,8 @@ body {
 	border: none;
 	border-radius: 50%;
 	cursor: pointer;
-    z-index: 3;
-    outline: 0;
+	z-index: 3;
+	outline: 0;
 }
 #back_button:hover {
 	background-color: rgba(158,158,158,.2);
@@ -76,7 +76,7 @@ section {
 }
 h2 {
 	font-size: 1.5em;
-    font-weight: 300;
+	font-weight: 300;
 	margin: 1em 0;
 }
 textarea {
@@ -108,7 +108,7 @@ textarea {
 	text-decoration: none;
 	color: #72a0c7;
 	font-size: 1em;
-	font-weight: 700;
+	font-weight: 500;
 	padding: 5px 15px;
 	cursor: pointer;
 	text-align: center;
@@ -130,6 +130,12 @@ textarea {
 }
 </style>
 <script>
+function getParameterByName(name) {
+    name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+    var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
+        results = regex.exec(location.search);
+    return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
+}
 function LoadJSON(newname) {
 	var xmlhttp;
 	if (window.XMLHttpRequest) {
@@ -144,7 +150,7 @@ function LoadJSON(newname) {
 			GotResult(xmlhttp.responseText, xmlhttp.status);
 		}
 	}
-	xmlhttp.open("GET", "?n=" + encodeURIComponent(newname), true);
+	xmlhttp.open("GET", "?t=" + encodeURIComponent(getParameterByName('t')) + "&n=" + encodeURIComponent(newname), true);
 	xmlhttp.setRequestHeader("X-Requested-With", "XMLHttpRequest");
 	xmlhttp.send();
 }
@@ -182,8 +188,9 @@ document.addEventListener('DOMContentLoaded', function() {
 	<input class="btn btnmain" type="submit" value="更新群名" id="fsubmit">
 	</div>
 	<h2>设置新群名</h2>
+	<!-- <p id="prefix">{{ prefix }}</p> -->
 	<p id="prefix">##Orz 分部喵 -</p>
-	<textarea name="n" type="text" id="newname" placeholder="…" rows="5"></textarea>
+	<textarea name="n" type="text" id="newname" placeholder="…" rows="5">{{ title }}</textarea>
 </form>
 </section>
 </div>
