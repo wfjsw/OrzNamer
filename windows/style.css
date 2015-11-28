@@ -1,0 +1,172 @@
+@font-face {
+    font-family: myIcons;
+    src: url(SegoeMDL2Assets3.woff);
+}
+
+* {
+    box-sizing: border-box;
+    font-family: "Segoe UI", "Microsoft YaHei UI", "Microsoft YaHei", sans-serif;
+    outline: none;
+}
+html {
+    height: 100%;
+
+    min-height: 120px;
+}
+body {
+    margin: 0;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+.titlebar {
+    height: auto;
+    background-color: #e6e6e6;
+    line-height: 50px;
+    overflow:auto;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    cursor: default;
+}
+.titlebar::after {
+    clear: both;
+}
+.titleitem {
+    height: 50px;
+    background-color: #e6e6e6;
+    font-size: 11pt;
+    font-weight: 600;
+    text-transform: uppercase;
+    float: left;
+}
+
+.onright {
+    float: right;
+}
+
+.title {
+    flex: 1;
+    left: 50px;
+    color: black;
+    padding: 0 1em;
+}
+.container {
+    clear: both;
+    padding: 18px;
+    font-size: 12pt;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.titlebutton {
+    width: auto;
+    border: none;
+    text-align: center;
+    color: black;
+    text-decoration: none;
+    padding: 0;
+    font-size: 11pt;
+    color: black;
+}
+a.titlebutton {
+    /*padding: 0 1em;*/
+}
+.titlebutton:hover {
+    background-color: #cfcfcf;
+}
+.titlebutton:active {
+    background-color: #b8b8b8;
+}
+.icon {
+    /*flex: 0 50px;*/
+    width: 50px;
+    height: 50px;
+    background-image: url("orz.gif");
+    background-size: 50px;
+}
+.textbox {
+    flex: 1;
+    border: none;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    font-size: 12pt;
+}
+.disabled {
+    pointer-events: none;
+    cursor: default;
+}
+.button {
+    width: 90px;
+    height: 32px;
+    border: none;
+    border: 2px solid #cccccc;
+    background-color: #cccccc;
+    text-align: center;
+    color: black;
+    text-decoration: none;
+    padding: 0;
+    font-size: 11pt;
+    color: black;
+    display: block;
+}
+.button:hover {
+    border: 2px solid #7a7a7a;
+}
+.button:active {
+    background-color: #999999;
+    border: 2px solid #999999;
+    border: none;
+}
+footer {
+    background-color: #e6e6e6;
+    line-height: 48px;
+    height: 48px;
+    overflow:auto;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    cursor: default;
+    flex: 0 1 48px;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-content: flex-end;
+    transition: all .35s cubic-bezier(0.1,0.9,0.2,1);
+    overflow: hidden;
+    z-index: 99999;
+}
+footer.expand {
+    height: 60px;
+    flex: 0 1 60px;
+}
+.save_button {
+    font-family: myIcons;
+    font-size: 14pt;
+    /*padding: 0 1.35em;*/
+    width: 3.5em;
+}
+.more_button {
+    font-family: myIcons;
+    font-size: 14pt;
+    width: 2.5em;
+}
+.desc {
+    position: relative;
+    top: -.5em;
+    font-size: 9pt;
+    line-height: 12px;
+}
+.invisible {
+    display: none;
+}
+.modal_wrap {
+    position: fixed;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    cursor: default;
+}
