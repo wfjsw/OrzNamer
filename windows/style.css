@@ -29,6 +29,7 @@ body {
     -webkit-user-select: none;
     -moz-user-select: none;
     -ms-user-select: none;
+    user-select: none;
     cursor: default;
 }
 .titlebar::after {
@@ -137,6 +138,7 @@ footer {
     justify-content: flex-end;
     align-content: flex-end;
     transition: all .35s cubic-bezier(0.1,0.9,0.2,1) 0s;
+    -ms-transition: all .35s cubic-bezier(0.1,0.9,0.2,1) 0s;
     overflow: hidden;
     z-index: 99999;
 }
