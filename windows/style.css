@@ -65,6 +65,7 @@ body {
     display: -webkit-flex;
     flex-direction: column;
     -webkit-flex-direction: column;
+    -webkit-flex: 1;
 }
 
 .titlebutton {
