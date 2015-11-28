@@ -22,7 +22,6 @@ body {
     -webkit-flex-direction: column;
     overflow: hidden;
     touch-action:manipulation;
-    -webkit-overflow-scrolling: touch;
 }
 .titlebar {
     height: auto;
