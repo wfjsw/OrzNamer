@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<!-- Orz-Common Name Dept Portal Windows Phone -->
+<!-- Staging 0.0.1 11.27.15.01.01.08 -->
+<html lang="zh-CN">
+	<head>
+		<title>##Orz 改名部</title>
+		<link rel="stylesheet" href="css/splashscreen.css">
+		<script src="js/splash.js" type="text/javascript"></script>
+		<link rel="stylesheet" href="css/ui-light.min.css">
+		<link rel="stylesheet" href="css/app-stg.css">
+		<meta charset="utf-8" />
+    	<meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+	</head>
+	<body>
+		<div id="splashscreen">
+			<progress id="infSplashscreenPgr" class="win-ring"></progress>
+		</div>
+		
+		<div id="coreContent" style="display: none;">
+			<div id="contentArea">
+				<!-- Header -->
+				<div id="appHeader">
+					<button data-win-control="WinJS.UI.BackButton"></button>
+					<h3 class="win-h3">##Orz 改名部</h3>
+				</div>
+			
+				<!-- Content Control -->
+				<textarea id="titleTextArea" placeholder="在这里输入群名..." class="win-textarea textcore"></textarea>
+			</div>
+		</div>
+		<!-- AppBar -->
+		<div id="coreAppAppBar" data-win-control="WinJS.UI.AppBar" data-win-options="{placement:'bottom'}" style="display: none;">
+			<button 
+				data-win-control="WinJS.UI.AppBarCommand" 
+				data-win-options="{id:'cmdSubmit',label:'提交',icon:'accept',tooltip:'提交修改的群名称',section:'primary',onclick:OrzPublicWorks.NamingDept.WindowsPhone.submitRequest}"></button>
+		</div>
+		<!-- BEGIN WinJS REFERENCE -->
+		<script src="js/base.min.js" type="text/javascript"></script>
+		<script src="js/ui.min.js" type="text/javascript"></script>
+		<!-- END WinJS REFERENCE -->
+		<!-- BEGIN App STAGING REFERENCE -->
+		<script src="js/app.stg.js" type="text/javascript"></script>
+		<!-- END App STAGING REFERENCE -->
+	</body>
+</html>
