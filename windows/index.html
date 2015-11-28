@@ -62,7 +62,7 @@
                 }
             });
             more_button.addEventListener("click", toggleFooter);
-            more_button.addEventListener("touched", function() {touchFix(this);});
+            more_button.addEventListener("touched", function() {touchFix(more_button);});
             modal_wrap.addEventListener("click", function() {
                 toggleFooter();
             })
