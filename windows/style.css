@@ -17,6 +17,7 @@ body {
     margin: 0;
     height: 100%;
     display: flex;
+    display: -webkit-flex;
     flex-direction: column;
     overflow: hidden;
     touch-action:manipulation;
@@ -60,6 +61,7 @@ body {
     font-size: 12pt;
     flex: 1;
     display: flex;
+    display: -webkit-flex;
     flex-direction: column;
 }
 
@@ -134,6 +136,7 @@ footer {
     cursor: default;
     flex: 0 1 48px;
     display: flex;
+    display: -webkit-flex;
     flex-direction: row;
     justify-content: flex-end;
     align-content: flex-end;
