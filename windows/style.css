@@ -50,10 +50,6 @@ body {
     float: right;
 }
 
-.bodywrap {
-    -webkit-overflow-scrolling: touch;
-}
-
 .title {
     flex: 1;
     left: 50px;
