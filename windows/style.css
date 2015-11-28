@@ -19,6 +19,7 @@ body {
     display: flex;
     display: -webkit-flex;
     flex-direction: column;
+    -webkit-flex-direction: column;
     overflow: hidden;
     touch-action:manipulation;
 }
@@ -63,6 +64,7 @@ body {
     display: flex;
     display: -webkit-flex;
     flex-direction: column;
+    -webkit-flex-direction: column;
 }
 
 .titlebutton {
