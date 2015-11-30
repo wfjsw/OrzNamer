@@ -3,163 +3,15 @@
 <head>
 <meta http-equiv="content-type" content="text/html; charset=UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#6485ae">
 <title>##Orz 改名部</title>
-<style>
-body {
-	font-family: "Roboto","Helvetica","Arial",sans-serif;
-	margin: 0;
-	background-color: #dae1e7;
-}
-#header {
-	width: 100%;
-	height: 64px;
-	padding: 0;
-	margin: 0;
-	color: #fff;
-	background-color: #53749d;
-	box-shadow: 0 2px 2px 0 rgba(0,0,0,.14),0 3px 1px -2px rgba(0,0,0,.2),0 1px 5px 0 rgba(0,0,0,.12);
-	z-index: 2;
-	position: relative;
-}
-#headerdiv {
-	overflow: auto;
-	height: 64px;
-	margin: 0;
-	padding: 0 40px 0 80px;
-	position: relative;
-}
-#headerwrap {
-	padding: 8px 0;
-}
-#pagetitle {
-	margin-left: 6px;
-	font-size: 20px;
-	letter-spacing: .02em;
-	font-weight: 400;
-	display: inline;
-}
-#photoh {
-	width: 48px;
-	height: 48px;
-	border-radius: 50%;
-	vertical-align: middle;
-}
-#back_button {
-	position: absolute;
-	left: 36px;
-	top: 16px;
-	height: 32px;
-	width: 32px;
-	background: none;
-	border: none;
-	border-radius: 50%;
-	cursor: pointer;
-    z-index: 3;
-    outline: 0;
-}
-#back_button:hover {
-	background-color: rgba(158,158,158,.2);
-}
-#back_button:focus {
-	background-color: rgba(0,0,0,.12);
-}
-#container {
-	margin: 0 auto;
-	max-width: 768px;
-	background-color: #fff;
-	z-index: 1;
-}
-section {
-	padding: 15px 37px 40px;
-	box-shadow: 0 2px 2px 0 rgba(0,0,0,.14),0 3px 1px -2px rgba(0,0,0,.2),0 1px 5px 0 rgba(0,0,0,.12);
-	border-radius: 2px;
-}
-h2 {
-	font-size: 1.5em;
-	margin: 1em 0;
-}
-textarea {
-	outline: 0;
-	font-family: sans-serif;
-	font-size: 100%;
-	margin-bottom: .625em;
-}
-#newname {
-	box-sizing: border-box;
-	border-width: 0px 0px 2px;
-	border-style: solid;
-	border-color: #CCC;
-	width: 100%;
-	padding: .4em .3em;
-	transition: all .2s;
-}
-#newname:focus {
-	border-color: #19E;
-	outline: 0;
-}
-#btncontainer {
-	float: right;
-}
-.btn {
-	background: 0 0;
-	border: none;
-	border-radius: 2px;
-	text-decoration: none;
-	color: #72a0c7;
-	font-size: 1em;
-	font-weight: 700;
-	padding: 5px 15px;
-	cursor: pointer;
-	text-align: center;
-	display: inline-block;
-	margin-bottom: .625em;
-	transition: all .2s;
-}
-.btn:hover, .btn:focus {
-	background-color: #f2f6fa;
-	outline: 0;
-}
-.btnmain {
-	color: #4680b3;
-}
-#prefix {
-	color: #3a6d99;
-	font-size: .875em;
-	padding-left: .25em;
-}
-</style>
+<link href="style.css" rel="stylesheet">
 <script>
-function LoadJSON(newname) {
-	var xmlhttp;
-	if (window.XMLHttpRequest) {
-		// code for IE7+, Firefox, Chrome, Opera, Safari
-		xmlhttp = new XMLHttpRequest();
-	} else {
-		// code for IE6, IE5
-		xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
-	}
-	xmlhttp.onreadystatechange = function() {
-		if (xmlhttp.readyState == XMLHttpRequest.DONE) {
-			GotResult(xmlhttp.responseText, xmlhttp.status);
-		}
-	}
-	xmlhttp.open("GET", "?n=" + encodeURIComponent(newname), true);
-	xmlhttp.setRequestHeader("X-Requested-With", "XMLHttpRequest");
-	xmlhttp.send();
-}
-function GotResult(result, code) {
-	var d = JSON.parse(result);
-}
-function UpdateName() {
-	LoadJSON(document.getElementById("newname").value);
-	return false;
-}
 document.addEventListener('DOMContentLoaded', function() {
 	document.getElementById("back_button").addEventListener("click", function BackButtonClick() {
 		history.back();
 		window.close();
 	});
-	document.getElementById("setname").onsubmit = UpdateName;
 });
 </script>
 </head>
@@ -170,7 +22,7 @@ document.addEventListener('DOMContentLoaded', function() {
 	</button>
 	<div id="headerdiv">
 		<div id="headerwrap">
-		<img id="photoh" src="orz.png"><h1 id="pagetitle"> ##Orz 改名部</h1>
+		<img id="photoh" src="orz.png"> <h1 id="pagetitle">##Orz 改名部</h1>
 		</div>
 	</div>
 </header>
