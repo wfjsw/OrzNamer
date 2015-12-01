@@ -62,28 +62,19 @@ def change_title(uid, title):
 def get_template(ua, lang, token, uid, title):
     return ' '.join(map(repr, (ua, lang, token, uid, title)))
 
-@app.route('/')
+@app.route('/api')
 def index():
     token = flask.request.args.get('t', '')
     oldtitle = original_title()
     newtitle = flask.request.args.get('n', '')
     uid = verify_token(token)
-    if flask.request.is_xhr:
-        if uid and newtitle:
+    if uid and newtitle:
             change_title(uid, newtitle)
             ret = {'ok': True, 'uid': uid, 'title': newtitle}
             return flask.make_response(flask.json.dumps(ret), 200)
-        else:
+    else:
             ret = {'ok': False, 'title': oldtitle}
             return flask.make_response(flask.json.dumps(ret), 403)
-    elif uid:
-        if newtitle:
-            change_title(uid, newtitle)
-            return get_template(flask.request.user_agent, flask.g.lang, token, uid, newtitle)
-        else:
-            return get_template(flask.request.user_agent, flask.g.lang, token, uid, oldtitle)
-    else:
-        return flask.make_response(get_template(flask.request.user_agent, flask.g.lang, token, uid, oldtitle), 403)
 
 @app.route('/generate_204')
 def generate_204():
