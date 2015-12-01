@@ -2,18 +2,16 @@
     font-family: myIcons;
     src: url(SegoeMDL2Assets3.woff);
 }
-
 * {
     box-sizing: border-box;
     font-family: "Segoe UI", "Microsoft YaHei UI", "Microsoft YaHei", sans-serif;
     outline: none;
 }
 html, body {
-  height: 100%;
-  width: 100%;
-  overflow: hidden;
+    height: 100%;
+    width: 100%;
+    overflow: hidden;
 }
-
 body {
     margin: 0;
     display: flex;
@@ -21,7 +19,7 @@ body {
     flex-direction: column;
     -webkit-flex-direction: column;
     overflow: hidden;
-    touch-action:manipulation;
+    touch-action: manipulation;
 }
 .titlebar::after {
     clear: both;
@@ -34,11 +32,9 @@ body {
     text-transform: uppercase;
     float: left;
 }
-
 .onright {
     float: right;
 }
-
 .title {
     flex: 1;
     left: 48px;
@@ -56,7 +52,6 @@ body {
     -webkit-flex-direction: column;
     -webkit-flex: 1;
 }
-
 .barbutton {
     width: auto;
     border: none;
@@ -67,7 +62,6 @@ body {
     font-size: 11pt;
     color: black;
 }
-
 .barbutton:hover {
     background-color: #cfcfcf;
 }
@@ -83,13 +77,19 @@ body {
 .textbox {
     flex: 1;
     -webkit-flex: 1;
-    border: none;
     width: 100%;
-    margin: 0;
-    padding: 0;
+    margin: .5em 0;
+    padding: 0.5em;
     font-size: 12pt;
     resize: none;
 }
+textarea {
+    border: solid 2px #999999;
+}
+textarea:hover {
+    border-color: #666666;
+}
+
 .disabled {
     pointer-events: none;
     cursor: default;
@@ -125,6 +125,7 @@ body {
     -ms-user-select: none;
     cursor: default;
     overflow: hidden;
+    /*width: 100%;*/
 }
 footer {
     display: flex;
@@ -132,7 +133,7 @@ footer {
     flex-direction: row;
     justify-content: flex-end;
     align-content: flex-end;
-    transition: flex-basis .35s cubic-bezier(0.1,0.9,0.2,1) 0s;
+    transition: flex-basis .35s cubic-bezier(0.1, 0.9, 0.2, 1) 0s;
     z-index: 99999;
     -webkit-flex: 0 1 48px;
     -webkit-justify-content: flex-end;
@@ -143,14 +144,20 @@ footer.expand {
     -webkit-flex: 0 1 60px;
 }
 .save_button {
-    font-family: myIcons;
     font-size: 14pt;
     width: 3.5em;
 }
-.more_button {
+.save_button::before {
     font-family: myIcons;
+    content: "\e105";
+}
+.more_button {
     font-size: 14pt;
     width: 2.5em;
+}
+.more_button::before {
+    font-family: myIcons;
+    content: "\e10c";
 }
 .desc {
     position: relative;

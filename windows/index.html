@@ -15,18 +15,25 @@
             <div id="back_button" class="icon titleitem barbutton" src="orz.gif"></div>
             <div class="title titleitem">##Orz 改名部</div>
         </header>
-        <div class="container">
+        <form class="container" action="" method="post">
             <div>##Orz 分部喵 - daily.orz.chat -</div>
-            <textarea id="newname_box" class="textbox" placeholder="New name" autofocus="autofocus">FIXME: original name should be here</textarea>
-        </div>
-        <div id="modal_wrap" class="modal_wrap invisible desc"></div>
-        <footer id="footer" class="bar">
-            <a id="submit_button" class="barbutton save_button" href="javascript:">&#xE105;<div class="desc invisible">保存</div></a>
-            <div id="more_button" class="barbutton more_button">&#xE10C;</div>
+            <textarea id="newname" class="textbox" placeholder="New name" autofocus="autofocus" rows="5">FIXME: original name should be here</textarea>
+            <button type="submit" class="button legacy_support">保存</button>
+        </form>
+        <div id="modal_wrap" class="modal_wrap invisible"></div>
+        <footer id="footer" class="bar legacy_support invisible">
+            <div id="submit_button" class="barbutton save_button"><div class="desc">保存</div></div>
+            <div id="more_button" class="barbutton more_button"><!--&#xE10C;--></div>
         </footer>
 
+
         <script><!--
-        footer_expanded = false;
+            footer_expanded = false;
+
+            function forEachOfClass(className, callback) {
+                [].forEach.call(document.getElementsByClassName(className), callback);
+            }
+
             function goBack() {
                     history.back();
                     window.close();
@@ -49,20 +56,28 @@
                 [].forEach.call(document.getElementsByClassName("desc"), function (ele) {
                     ele.classList.toggle("invisible");
                 });
+                modal_wrap.classList.toggle("invisible");
                 more_button.focus();
             }
 
+            forEachOfClass("desc", function(e) {
+                e.classList.toggle("invisible");
+            })
+            forEachOfClass("legacy_support", function(e) {
+                e.classList.toggle("invisible");
+            })
+
             back_button.addEventListener("click", goBack);
             submit_button.addEventListener("click", function() {
-                newname_box.disabled = true;
+                newname.disabled = true;
                 submit_button.classList.add("disabled");
                 back_button.classList.add("disabled");
 
-                if(updateName(newname_box.value)) {
+                if(updateName(newname.value)) {
                     goBack();
                 } else {
                     showPrompt("更新失败。", function() {
-                        newname_box.disabled = false;
+                        newname.disabled = false;
                         submit_button.classList.remove("disabled");
                         back_button.classList.remove("disabled");
                     });
