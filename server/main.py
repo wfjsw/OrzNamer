@@ -69,12 +69,12 @@ def index():
     newtitle = flask.request.args.get('n', '')
     uid = verify_token(token)
     if uid and newtitle:
-            change_title(uid, newtitle)
-            ret = {'ok': True, 'uid': uid, 'title': newtitle}
-            return flask.make_response(flask.json.dumps(ret), 200)
+        change_title(uid, newtitle)
+        ret = {'ok': True, 'uid': uid, 'title': newtitle}
+        return flask.make_response(flask.json.dumps(ret), 200)
     else:
-            ret = {'ok': False, 'title': oldtitle}
-            return flask.make_response(flask.json.dumps(ret), 403)
+        ret = {'ok': False, 'title': oldtitle}
+        return flask.make_response(flask.json.dumps(ret), 403)
 
 @app.route('/generate_204')
 def generate_204():
