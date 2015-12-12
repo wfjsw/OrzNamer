@@ -19,9 +19,12 @@ from itsdangerous import URLSafeTimedSerializer
 
 RE_INVALID = re.compile("[\000-\037\t\r\x0b\x0c\ufeff]")
 
-logging.basicConfig(stream=sys.stderr, format='%(asctime)s [%(levelname)s] %(message)s', level=logging.DEBUG if sys.argv[-1] == '-d' else logging.INFO)
+logging.basicConfig(stream=sys.stderr, format='%(asctime)s [%(levelname)s] %(message)s',
+                    level=logging.DEBUG if sys.argv[-1] == '-d' else logging.INFO)
+
 
 class AttrDict(dict):
+
     def __init__(self, *args, **kwargs):
         super(AttrDict, self).__init__(*args, **kwargs)
         self.__dict__ = self
@@ -30,24 +33,28 @@ class AttrDict(dict):
 
 HSession = requests.Session()
 
+
 class BotAPIFailed(Exception):
     pass
+
 
 def bot_api(method, **params):
     for att in range(3):
         try:
-            req = HSession.get(('https://api.telegram.org/bot%s/' % CFG.apitoken) + method, params=params, timeout=45)
+            req = HSession.get(('https://api.telegram.org/bot%s/' %
+                                CFG.apitoken) + method, params=params, timeout=45)
             retjson = req.content
             ret = json.loads(retjson.decode('utf-8'))
             break
         except Exception as ex:
             if att < 1:
-                time.sleep((att+1) * 2)
+                time.sleep((att + 1) * 2)
             else:
                 raise ex
     if not ret['ok']:
         raise BotAPIFailed(repr(ret))
     return ret['result']
+
 
 def getupdates():
     global STATE
@@ -64,15 +71,19 @@ def getupdates():
                 processmsg(upd)
         time.sleep(.2)
 
+
 def processmsg(d):
     logging.debug('Msg arrived: %r' % d)
     uid = d['update_id']
     if 'message' in d:
         msg = d['message']
         if msg['chat']['type'] == 'private' and msg.get('text', '').startswith('/t'):
-            logging.info(bot_api('sendMessage', chat_id=msg['chat']['id'], text=CFG.url + get_token(msg['from']['id'])))
+            bot_api('sendMessage', chat_id=msg['chat'][
+                    'id'], text=CFG.url + get_token(msg['from']['id']))
+            logging.info('send a token to %s' % msg['from'])
 
 # Cli bot
+
 
 def get_members():
     global CFG
@@ -96,6 +107,8 @@ def get_members():
         items = obj['members']
         for item in items:
             STATE.members[str(item['peer_id'])] = item
+    logging.info('Original title is: ' + STATE.title)
+
 
 def handle_update(obj):
     global STATE
@@ -108,10 +121,13 @@ def handle_update(obj):
 
 # HTTP Server
 
+
 class ThreadingHTTPServer(socketserver.ThreadingMixIn, http.server.HTTPServer):
+
     def server_bind(self, *args, **kwargs):
         super().server_bind(*args, **kwargs)
         self.socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+
 
 class HTTPHandler(http.server.BaseHTTPRequestHandler):
 
@@ -148,12 +164,12 @@ class HTTPHandler(http.server.BaseHTTPRequestHandler):
                 if code == 200:
                     ret['title'] = newtitle
                 elif code != 403:
-                    ret['title'] = STATE.title
+                    ret['title'] = cut_title(STATE.title)
                 return code, json.dumps(ret)
             else:
                 uid = verify_token(query['t'][0])
                 if uid:
-                    return 200, json.dumps({'title': STATE.title})
+                    return 200, json.dumps({'title': cut_title(STATE.title)})
                 else:
                     return 403, json.dumps({'error': 'invalid token'})
         else:
@@ -172,15 +188,18 @@ class HTTPHandler(http.server.BaseHTTPRequestHandler):
 
 # Processing
 
+
 def token_gc():
     for uid, gentime in tuple(STATE.tokens.items()):
         if time.time() - gentime > CFG.tokenexpire:
             del STATE.tokens[str(uid)]
 
+
 def get_token(uid):
     serializer = URLSafeTimedSerializer(CFG.secretkey, 'Orz')
     STATE.tokens[str(uid)] = time.time()
     return serializer.dumps(uid)
+
 
 def verify_token(token):
     serializer = URLSafeTimedSerializer(CFG.secretkey, 'Orz')
@@ -189,22 +208,31 @@ def verify_token(token):
         if time.time() - STATE.tokens[str(uid)] > CFG.tokenexpire:
             return False
     except Exception:
-        logging.exception('token failed')
         return False
     return uid
+
+
+def cut_title(title):
+    return title[len(CFG.prefix):]
+
 
 def change_title(token, title):
     uid = verify_token(token)
     if uid is False:
         return 403, {'error': 'invalid token'}
-    ret = TGCLI.cmd_rename_channel('%s#id%d' % (CFG.grouptype, CFG.groupid), CFG.prefix + title)
+    ret = TGCLI.cmd_rename_channel('%s#id%d' % (
+        CFG.grouptype, CFG.groupid), CFG.prefix + title)
     if ret['result'] == 'SUCCESS':
-        bot_api('sendMessage', chat_id=CFG.apigroupid, text='@%s 修改了群组名称。' % STATE.members[str(uid)]['username'])
+        uname = STATE.members[str(uid)]['username']
+        bot_api('sendMessage', chat_id=CFG.apigroupid,
+                text='@%s 修改了群组名称。' % uname)
         del STATE.tokens[str(uid)]
         STATE.title = CFG.prefix + title
+        logging.info('@%s changed title to %s' % (uname, STATE.title))
         return 200, ret
     else:
         return 406, ret
+
 
 def load_config():
     cfg = AttrDict(json.load(open('config.json', encoding='utf-8')))
@@ -214,11 +242,12 @@ def load_config():
         state = AttrDict({'offset': 0, 'members': {}, 'tokens': {}})
     return cfg, state
 
-def save_config():
-    json.dump(STATE, open('state.json', 'w'), indent=1)
 
-def run(server_class=ThreadingHTTPServer,
-        handler_class=HTTPHandler):
+def save_config():
+    json.dump(STATE, open('state.json', 'w'), sort_keys=True, indent=1)
+
+
+def run(server_class=ThreadingHTTPServer, handler_class=HTTPHandler):
     server_address = (CFG.serverip, CFG.serverport)
     httpd = server_class(server_address, handler_class)
     httpd.serve_forever()
