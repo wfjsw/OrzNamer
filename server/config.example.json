@@ -1,0 +1,13 @@
+{
+"grouptype": "channel",
+"groupid": 1001022222,
+"apigroupid": -1001001022222,
+"apitoken": "BOT_API_TOKEN",
+"secretkey": "SECRET_KEY",
+"prefix": "##Orz",
+"tokenexpire": 300,
+"url": "http://127.0.0.1/title?t=",
+"tgclibin": "../../tg/bin/telegram-cli",
+"serverip": "127.0.0.1",
+"serverport": 5111
+}

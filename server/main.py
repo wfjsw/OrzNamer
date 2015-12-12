@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-
 import os
 import re
 import time
@@ -10,12 +9,8 @@ import flask
 from itsdangerous import URLSafeTimedSerializer
 
 AVAIL_LANG = ('zh-cn', 'zh-tw', 'en')
-MAX_AGE = 180
-# CHANGE THIS
-SECRETKEY = b'4\xaf\x05\xcd\xa5Az\xf2\xb57\xc9\x9c\xed\xb1\xfd\x94\xda(\xe0\xcc\x96b\x07*\x89\xa1\xdb*\xd0g\x1d\x13'
 
 app = flask.Flask(__name__)
-app.secret_key = SECRETKEY
 
 # From django.utils.translation.trans_real.parse_accept_lang_header
 accept_language_re = re.compile(r'''
@@ -45,36 +40,29 @@ def accept_language(lang_string, available):
 def before_req():
     flask.g.lang = accept_language(flask.request.headers.get('Accept-Language', ''), AVAIL_LANG)
 
-def verify_token(s):
-    serializer = URLSafeTimedSerializer(app.secret_key, 'Orz')
-    try:
-        return serializer.loads(s, max_age=MAX_AGE)
-    except Exception:
-        return None
-
 def original_title():
     title = '##Orz 分部喵 - daily.orz.chat'
     return title
 
-def change_title(uid, title):
+def change_title(token, title):
     pass
 
 def get_template(ua, lang, token, uid, title):
     return ' '.join(map(repr, (ua, lang, token, uid, title)))
 
-@app.route('/api')
+@app.route('/title')
 def index():
     token = flask.request.args.get('t', '')
     oldtitle = original_title()
     newtitle = flask.request.args.get('n', '')
-    uid = verify_token(token)
-    if uid and newtitle:
-        change_title(uid, newtitle)
-        ret = {'ok': True, 'uid': uid, 'title': newtitle}
-        return flask.make_response(flask.json.dumps(ret), 200)
-    else:
-        ret = {'ok': False, 'title': oldtitle}
-        return flask.make_response(flask.json.dumps(ret), 403)
+    if newtitle:
+        result, info = change_title(token, newtitle)
+        if result is True:
+            ret = {'ok': True, 'title': newtitle, 'info': info}
+            return flask.make_response(flask.json.dumps(ret), 200)
+        else:
+            ret = {'ok': False, 'title': oldtitle, 'info': info}
+            return flask.make_response(flask.json.dumps(ret), 401)
 
 @app.route('/generate_204')
 def generate_204():
