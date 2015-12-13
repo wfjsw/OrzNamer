@@ -19,9 +19,11 @@ from itsdangerous import URLSafeTimedSerializer
 
 RE_INVALID = re.compile("[\000-\037\t\r\x0b\x0c\ufeff]")
 
-logging.basicConfig(stream=sys.stderr, format='%(asctime)s [%(levelname)s] %(message)s',
+logging.basicConfig(stream=sys.stderr, format='%(asctime)s [%(name)s:%(levelname)s] %(message)s',
                     level=logging.DEBUG if sys.argv[-1] == '-d' else logging.INFO)
 
+logger_botapi = logging.getLogger('botapi')
+logger_http = logging.getLogger('http')
 
 class AttrDict(dict):
 
@@ -62,10 +64,10 @@ def getupdates():
         try:
             updates = bot_api('getUpdates', offset=STATE['offset'], timeout=10)
         except Exception as ex:
-            logging.exception('Get updates failed.')
+            logger_botapi.exception('Get updates failed.')
             continue
         if updates:
-            logging.debug('Messages coming.')
+            logger_botapi.debug('Messages coming.')
             STATE['offset'] = updates[-1]["update_id"] + 1
             for upd in updates:
                 processmsg(upd)
@@ -73,14 +75,14 @@ def getupdates():
 
 
 def processmsg(d):
-    logging.debug('Msg arrived: %r' % d)
+    logger_botapi.debug('Msg arrived: %r' % d)
     uid = d['update_id']
     if 'message' in d:
         msg = d['message']
         if msg['chat']['type'] == 'private' and msg.get('text', '').startswith('/t'):
             bot_api('sendMessage', chat_id=msg['chat'][
                     'id'], text=CFG.url + get_token(msg['from']['id']))
-            logging.info('send a token to %s' % msg['from'])
+            logger_botapi.info('Sent a token to %s' % msg['from'])
 
 # Cli bot
 
@@ -137,7 +139,7 @@ class HTTPHandler(http.server.BaseHTTPRequestHandler):
         self.send_header('Date', self.date_time_string())
 
     def log_message(self, format, *args):
-        logging.info('%s - - [%s] %s "%s" "%s"' % (
+        logger_http.info('%s - - [%s] %s "%s" "%s"' % (
             self.headers.get('X-Forwarded-For', self.address_string()),
             self.log_date_time_string(), format % args, self.headers.get('Referer', '-'), self.headers.get('User-Agent', '-')))
 
@@ -258,6 +260,7 @@ if __name__ == '__main__':
     TGCLI.ready.wait()
     try:
         get_members()
+        token_gc()
 
         apithr = threading.Thread(target=getupdates)
         apithr.daemon = True
