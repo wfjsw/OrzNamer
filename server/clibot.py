@@ -165,13 +165,15 @@ class HTTPHandler(http.server.BaseHTTPRequestHandler):
                 code, ret = change_title(query['t'][0], newtitle)
                 if code == 200:
                     ret['title'] = newtitle
+                    ret['prefix'] = CFG.prefix
                 elif code != 403:
                     ret['title'] = cut_title(STATE.title)
+                    ret['prefix'] = CFG.prefix
                 return code, json.dumps(ret)
             else:
                 uid = verify_token(query['t'][0])
                 if uid:
-                    return 200, json.dumps({'title': cut_title(STATE.title)})
+                    return 200, json.dumps({'title': cut_title(STATE.title), 'prefix': CFG.prefix})
                 else:
                     return 403, json.dumps({'error': 'invalid token'})
         else:

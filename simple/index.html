@@ -27,23 +27,36 @@ function LoadJSON(newname) {
 			GotResult(xmlhttp.responseText, xmlhttp.status);
 		}
 	}
-	xmlhttp.open("GET", "?t=" + encodeURIComponent(getParameterByName('t')) + "&n=" + encodeURIComponent(newname), true);
+	if (newname) {
+		xmlhttp.open("GET", "/title?t=" + encodeURIComponent(getParameterByName('t')) + "&n=" + encodeURIComponent(newname), true);
+	} else {
+		xmlhttp.open("GET", "/title?t=" + encodeURIComponent(getParameterByName('t')), true);
+	}
 	xmlhttp.setRequestHeader("X-Requested-With", "XMLHttpRequest");
 	xmlhttp.send();
 }
 function GotResult(result, code) {
-	var d = JSON.parse(result);
+	if (code == 200) {
+		BackButtonClick();
+	} else if (code == 403) {
+		alert('STUB: 错误：凭据无效');
+	} else {
+		var d = JSON.parse(result);
+		alert('STUB: 错误：' + d['error']);
+	}
 }
 function UpdateName() {
 	LoadJSON(document.getElementById("newname").value);
 	return false;
 }
+function BackButtonClick() {
+	history.back();
+	window.close();
+}
 document.addEventListener('DOMContentLoaded', function() {
-	document.getElementById("back_button").addEventListener("click", function BackButtonClick() {
-		history.back();
-		window.close();
-	});
+	document.getElementById("back_button").addEventListener("click", BackButtonClick);
 	document.getElementById("setname").onsubmit = UpdateName;
+	LoadJSON('');
 });
 </script>
 </head>
@@ -65,8 +78,7 @@ document.addEventListener('DOMContentLoaded', function() {
 	<input class="btn btnmain" type="submit" value="更新群名" id="fsubmit">
 	</div>
 	<h2>设置新群名</h2>
-	<!-- <p id="prefix">{{ prefix }}</p> -->
-	<p id="prefix">##Orz 分部喵 -</p>
+	<p id="prefix">{{ prefix }}</p>
 	<textarea name="n" type="text" id="newname" placeholder="…" rows="5">{{ title }}</textarea>
 </form>
 </section>
