@@ -92,6 +92,7 @@ def get_members():
     # To ensure the id is valid
     TGCLI.cmd_dialog_list()
     peername = '%s#id%d' % (CFG.grouptype, CFG.groupid)
+    STATE.members = {}
     if CFG.grouptype == 'channel':
         items = TGCLI.cmd_channel_get_members(peername, 100)
         for item in items:
@@ -209,6 +210,8 @@ def verify_token(token):
     serializer = URLSafeTimedSerializer(CFG.secretkey, 'Orz')
     try:
         uid = serializer.loads(token, max_age=CFG.tokenexpire)
+        if str(uid) not in STATE.members:
+            return False
         if time.time() - STATE.tokens[str(uid)] > CFG.tokenexpire:
             return False
     except Exception:
@@ -224,6 +227,7 @@ def change_title(token, title):
     uid = verify_token(token)
     if uid is False:
         return 403, {'error': 'invalid token'}
+    title = RE_INVALID.sub('', title).replace('\n', ' ')
     ret = TGCLI.cmd_rename_channel('%s#id%d' % (
         CFG.grouptype, CFG.groupid), CFG.prefix + title)
     if ret['result'] == 'SUCCESS':
@@ -261,7 +265,8 @@ if __name__ == '__main__':
     TGCLI = tgcli.TelegramCliInterface(CFG.tgclibin)
     TGCLI.ready.wait()
     try:
-        get_members()
+        if not STATE.members:
+            get_members()
         token_gc()
 
         apithr = threading.Thread(target=getupdates)
