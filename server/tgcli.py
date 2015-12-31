@@ -35,7 +35,7 @@ class TelegramCliInterface:
         self.ready = threading.Event()
         self.closed = False
         self.thread = None
-        self.tmpdir = None
+        self.tmpdir = tempfile.mkdtemp()
         self.timeout = timeout
         # Event callbacks
         # `on_info`, `on_json` and `on_text` are for stdout
@@ -67,8 +67,9 @@ class TelegramCliInterface:
     def checkproc(self):
         if self.closed or self.proc and self.proc.poll() is None:
             return self.proc
-        self.tmpdir = tempfile.mkdtemp()
         sockfile = os.path.join(self.tmpdir, 'tgcli.sock')
+        if os.path.exists(sockfile):
+            os.unlink(sockfile)
         self.proc = subprocess.Popen((self.cmd, '-k', self._get_pubkey(), '--json', '-R', '-C', '-S', sockfile) + self.extra_args, stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
         while not os.path.exists(sockfile):
             time.sleep(0.5)
@@ -79,22 +80,22 @@ class TelegramCliInterface:
     def _run_cli(self):
         while not self.closed:
             self.checkproc()
-            self.on_start()
-            self.ready.set()
             try:
-                while self.ready.is_set():
+                while not self.closed:
                     out = self.proc.stdout.readline().decode('utf-8')
-                    if out:
-                        self.on_text(out)
-                        if out[0] in '[{':
-                            try:
-                                self.on_json(json.loads(out.strip()))
-                            except ValueError:
-                                self.on_info(out.strip())
-                        else:
+                    if not out:
+                        break
+                    elif not self.ready.is_set():
+                        self.on_start()
+                        self.ready.set()
+                    self.on_text(out)
+                    if out[0] in '[{':
+                        try:
+                            self.on_json(json.loads(out.strip()))
+                        except ValueError:
                             self.on_info(out.strip())
                     else:
-                        break
+                        self.on_info(out.strip())
             except BrokenPipeError:
                 pass
             finally:
@@ -114,20 +115,21 @@ class TelegramCliInterface:
     def restart(self):
         self.close()
         self.closed = False
+        self.tmpdir = tempfile.mkdtemp()
         self.run()
 
     def close(self):
         if self.closed:
             return
-        self.ready.clear()
         self.closed = True
+        self.ready.clear()
         try:
             self.proc.wait(2)
         except subprocess.TimeoutExpired:
             self.proc.kill()
         if self.thread:
             self.thread.join(1)
-        if self.tmpdir:
+        if os.path.isdir(self.tmpdir):
             shutil.rmtree(self.tmpdir, True)
             self.tmpdir = None
 
@@ -158,7 +160,7 @@ class TelegramCliInterface:
         Send a command to tg-cli.
         use `resync` for consuming text since last timeout.
         '''
-        self.checkproc()
+        self.ready.wait()
         self.sock.settimeout(timeout or self.timeout)
         self.sock.sendall(cmd.encode('utf-8') + b'\n')
         line = self._readline()
