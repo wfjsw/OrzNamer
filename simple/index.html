@@ -13,41 +13,22 @@ function getParameterByName(name) {
         results = regex.exec(location.search);
     return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
 }
-function LoadJSON(newname) {
-	var xmlhttp;
-	if (window.XMLHttpRequest) {
-		// code for IE7+, Firefox, Chrome, Opera, Safari
-		xmlhttp = new XMLHttpRequest();
-	} else {
-		// code for IE6, IE5
-		xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
-	}
-	xmlhttp.onreadystatechange = function() {
-		if (xmlhttp.readyState == XMLHttpRequest.DONE) {
-			GotResult(xmlhttp.responseText, xmlhttp.status);
-		}
-	}
-	if (newname) {
-		xmlhttp.open("GET", "/title?t=" + encodeURIComponent(getParameterByName('t')) + "&n=" + encodeURIComponent(newname), true);
-	} else {
-		xmlhttp.open("GET", "/title?t=" + encodeURIComponent(getParameterByName('t')), true);
-	}
-	xmlhttp.setRequestHeader("X-Requested-With", "XMLHttpRequest");
-	xmlhttp.send();
+function redir_for_name(newname) {
+    var rawquery = {
+        context: 'namerdept',
+        content: {
+            action: 'change_commit',
+            idstr: sessionStorage.request.idstr,
+            target_title: newname
+        }
+    };
+    var query = window.btoa(JSON.stringify(rawquery));
+    var queryuri = 'https://telegram.me/' + sessionStorage.request.callback + '?start=' + query;
+    location.href = queryuri;
 }
-function GotResult(result, code) {
-	if (code == 200) {
-		BackButtonClick();
-	} else if (code == 403) {
-		alert('STUB: 错误：凭据无效');
-	} else {
-		var d = JSON.parse(result);
-		alert('STUB: 错误：' + d['error']);
-	}
-}
+
 function UpdateName() {
-	LoadJSON(document.getElementById("newname").value);
-	return false;
+    redir_for_name(document.getElementById("newname").value);
 }
 function BackButtonClick() {
 	history.back();
@@ -55,8 +36,9 @@ function BackButtonClick() {
 }
 document.addEventListener('DOMContentLoaded', function() {
 	document.getElementById("back_button").addEventListener("click", BackButtonClick);
-	document.getElementById("setname").onsubmit = UpdateName;
-	LoadJSON('');
+	var getreq = JSON.parse(window.atob(location.search.substring(1)));
+	sessionStorage.request = getreq;
+	document.getElementById('prefix').innerText = getreq.prefix;
 });
 </script>
 </head>
@@ -73,14 +55,12 @@ document.addEventListener('DOMContentLoaded', function() {
 </header>
 <div id="container">
 <section id="appmain">
-<form id="setname" method="GET">
 	<div id="btncontainer">
-	<input class="btn btnmain" type="submit" value="更新群名" id="fsubmit">
+	<input class="btn btnmain" type="submit" value="更新群名" id="fsubmit" onclick="UpdateName();">
 	</div>
 	<h2>设置新群名</h2>
 	<p id="prefix">{{ prefix }}</p>
-	<textarea name="n" type="text" id="newname" placeholder="…" rows="5">{{ title }}</textarea>
-</form>
+	<textarea name="n" type="text" id="newname" placeholder="输入改名内容，用' - '分开…" rows="5"></textarea>
 </section>
 </div>
 </body>
