@@ -14,12 +14,13 @@ function getParameterByName(name) {
     return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
 }
 function redir_for_name(newname) {
+    var getreq = JSON.parse(window.atob(location.search.substring(1)));
     var rawquery = {
         context: 'namerdept',
         content: {
             action: 'change_commit',
-            idstr: sessionStorage.request.idstr,
-            target_title: newname
+            idstr: getreq.idstr,
+            target_title: escape(newname)
         }
     };
     var query = window.btoa(JSON.stringify(rawquery));
@@ -37,8 +38,7 @@ function BackButtonClick() {
 document.addEventListener('DOMContentLoaded', function() {
 	document.getElementById("back_button").addEventListener("click", BackButtonClick);
 	var getreq = JSON.parse(window.atob(location.search.substring(1)));
-	sessionStorage.request = getreq;
-	document.getElementById('prefix').innerText = getreq.prefix;
+	document.getElementById('prefix').innerText = unescape(getreq.prefix);
 });
 </script>
 </head>
