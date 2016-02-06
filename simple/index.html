@@ -24,7 +24,7 @@ function redir_for_name(newname) {
         }
     };
     var query = window.btoa(JSON.stringify(rawquery));
-    var queryuri = 'https://telegram.me/' + sessionStorage.request.callback + '?start=' + query;
+    var queryuri = 'https://telegram.me/' + getreq.callback + '?start=' + query;
     location.href = queryuri;
 }
 
