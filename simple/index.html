@@ -17,7 +17,7 @@ function redir_for_name(newname) {
     var getreq = JSON.parse(window.atob(location.search.substring(1)));
     var rawquery = '00' + escape(newname);
     var query = rawquery;
-    var queryuri = 'https://telegram.me/' + sessionStorage.request.callback + '?start=' + query;
+    var queryuri = 'https://telegram.me/' + getreq.callback + '?start=' + query;
     location.href = queryuri;
 }
 
